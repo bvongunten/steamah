@@ -331,7 +331,7 @@ public class MainController implements Initializable {
         int achievementDone = 0;
 
         for (Game game : tableView.getItems()) {
-            if (game.isPopulated()) {
+            if (game.isPopulated() && game.getHasStats()) {
                 achievementTotal += game.achievementsTotalProperty().get();
                 achievementDone += game.achievementsDoneProperty().get();
             }
