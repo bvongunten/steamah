@@ -23,4 +23,4 @@ To use the tool, you need a registered Steam API key, and your SteamId.
 * A Steam API key can be registered [here](https://steamcommunity.com/dev/apikey)
 * To get your own SteamId, go to [steam community](http://steamcommunity.com), select your profile. The steamId is the long number in the browser url field.
 
-[release]:https://github.com/bvongunten/nosload/releases
+[release]:https://github.com/bvongunten/steamah/releases
