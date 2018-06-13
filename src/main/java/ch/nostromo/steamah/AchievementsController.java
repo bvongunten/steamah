@@ -1,10 +1,13 @@
 package ch.nostromo.steamah;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import ch.nostromo.steamah.data.Achievement;
 import ch.nostromo.steamah.data.Game;
+import ch.nostromo.steamah.export.Export;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -19,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -60,6 +64,8 @@ public class AchievementsController implements Initializable {
     private TableColumn<Achievement, Boolean> colAchieved;
 
     private ObservableList<Achievement> tableViewList;
+    
+    private Game currentGame;
 
     /**
      * Create cell value factories
@@ -108,6 +114,8 @@ public class AchievementsController implements Initializable {
      */
     public void setAchievements(Game game) {
 
+    	this.currentGame = game;
+    	
         lblTitle.setText(game.getName());
 
         tableViewList = FXCollections.observableArrayList(game.getAchievements());
@@ -153,6 +161,29 @@ public class AchievementsController implements Initializable {
     void actionClose(ActionEvent event) {
         Stage stage = (Stage) borderPane.getScene().getWindow();
         stage.close();
+    }
+
+    /**
+     * Export list
+     * 
+     * @param event
+     * @throws IOException 
+     */
+    @FXML
+    void actionExport(ActionEvent event) throws IOException {
+        
+    	 FileChooser fileChooser = new FileChooser();
+    	 
+         //Set extension filter
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files (*.csv)", "*.csv");
+         fileChooser.getExtensionFilters().add(extFilter);
+        
+         //Show save file dialog
+         File file = fileChooser.showSaveDialog((Stage) borderPane.getScene().getWindow());
+        
+         if(file != null){
+        	 Export.saveAchievements(currentGame, file.toPath());
+         }
     }
 
 }
